@@ -45,4 +45,14 @@ class UserController extends AbstractController
         ]);
 
     }
+
+    #[Route('/user/users', name: 'display_users')]
+    public function display(UserRepository $userRepository): Response
+    {
+        $users = $userRepository->displayAllUsers();
+
+        return $this->render('user/users.html.twig', [
+            'users' => $users,
+        ]);
+    }
 }

@@ -3,6 +3,13 @@
 {% block title %}Display Users{% endblock %}
 
 {% block body %}
-
+    <h1>User List</h1>
+    <ul id="users">
+        {% for user in users %}
+            <li>{{ user.id }} - {{ user.email }}</li>
+        {% else %}
+            <li>No users found</li>
+        {% endfor %}
+    </ul>
 
 {% endblock %}
