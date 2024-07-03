@@ -2,9 +2,17 @@
 
 {% block title %}Add Muscle Group{% endblock %}
 
+
 {% block body %}
     {{ form_start(form) }}
-
     {{ form_end(form) }}
+
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+        <div class="alert alert-{{ label }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    {% endfor %}
 
 {% endblock %}

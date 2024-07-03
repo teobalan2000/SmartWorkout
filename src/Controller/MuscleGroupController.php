@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\MuscleGroup;
 use App\Form\MuscleGroupType;
 use App\Repository\MuscleGroupRepository;
+use App\Service\MuscleGroupValidation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class MuscleGroupController extends AbstractController
 {
     #[Route('/muscle', name: 'app_muscle_group')]
-    public function index(Request $request, MuscleGroupRepository $muscleGroupRepository): Response
+    public function index(Request $request, MuscleGroupRepository $muscleGroupRepository, MuscleGroupValidation $muscleGroupValidation): Response
     {
 
         $muscleGroup = new MuscleGroup();
@@ -24,13 +25,18 @@ class MuscleGroupController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $muscleGroup = $form->getData();
 
-            $muscleGroupRepository->addMuscleGroup($muscleGroup);
-
-            return $this->redirectToRoute('app_muscle_group');
+            if ($muscleGroupValidation->checkMuscleGroupExists($muscleGroup->getName())) {
+                $this->addFlash('error', 'Muscle group already exists.');
+                return $this->redirectToRoute('app_muscle_group');
+            } else {
+                $muscleGroupRepository->addMuscleGroup($muscleGroup);
+                return $this->redirectToRoute('app_muscle_group');
+            }
         }
 
         return $this->render('muscle_group/muscle.html.twig', [
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+
 }
