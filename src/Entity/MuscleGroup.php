@@ -21,7 +21,7 @@ class MuscleGroup
     /**
      * @var Collection<int, Exercise>
      */
-    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'muscle_group', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'muscleGroup', orphanRemoval: true)]
     private Collection $exercises;
 
     public function __construct()

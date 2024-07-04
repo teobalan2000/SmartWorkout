@@ -22,20 +22,36 @@ class ExerciseRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
-    //    /**
-    //     * @return Exercise[] Returns an array of Exercise objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function displayExercises()
+    {
+        return $this->findAll();
+    }
+
+    public function deleteExercise(int $id)
+    {
+        $existingExercise = $this->find($id);
+        if(!is_null($existingExercise))
+        {
+            $this->getEntityManager()->remove($existingExercise);
+            $this->getEntityManager()->flush();
+        }
+
+    }
+
+    /**
+     * @return Exercise|null Returns an Exercise object or null
+     */
+        public function checkIfExerciseExists($name, $id): ?Exercise
+        {
+            return $this->createQueryBuilder('e')
+                ->where('e.name = :name')
+                ->andWhere('e.id != :id')
+                ->setParameter('name', $name)
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getOneOrNullResult()
+            ;
+        }
 
     //    public function findOneBySomeField($value): ?Exercise
     //    {

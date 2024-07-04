@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class MuscleGroupController extends AbstractController
 {
     #[Route('/muscle', name: 'app_muscle_group')]
-    public function index(Request $request, MuscleGroupRepository $muscleGroupRepository, MuscleGroupValidation $muscleGroupValidation): Response
+    public function store(Request $request, MuscleGroupValidation $muscleGroupValidation): Response
     {
 
         $muscleGroup = new MuscleGroup();
@@ -25,18 +25,59 @@ class MuscleGroupController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $muscleGroup = $form->getData();
 
-            if ($muscleGroupValidation->checkMuscleGroupExists($muscleGroup->getName())) {
-                $this->addFlash('error', 'Muscle group already exists.');
+            $status = $muscleGroupValidation->addMuscleGroup($muscleGroup);
+
+            if(array_key_exists('status', $status)){
+                $this->addFlash('success', $status['message']);
                 return $this->redirectToRoute('app_muscle_group');
             } else {
-                $muscleGroupRepository->addMuscleGroup($muscleGroup);
+                $this->addFlash('error', $status['message']);
                 return $this->redirectToRoute('app_muscle_group');
             }
+
+//            if ($muscleGroupValidation->checkMuscleGroupExists($muscleGroup->getName())) {
+//                $this->addFlash('error', 'Muscle group already exists.');
+//                return $this->redirectToRoute('app_muscle_group');
+//            } else {
+//                $muscleGroupRepository->addMuscleGroup($muscleGroup);
+//                return $this->redirectToRoute('app_muscle_group');
+//            }
         }
 
         return $this->render('muscle_group/muscle.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+    #[Route('/muscleList', name: 'display_muscles')]
+    public function display(MuscleGroupRepository $muscleGroupRepository): Response
+    {
+        $muscles = $muscleGroupRepository->displayMuscles();
+
+        return $this->render('muscle_group/muscleList.html.twig', [
+            'muscles' => $muscles,
+        ]);
+    }
+
+    #[Route('/muscle/{id}/exercisesList', name: 'show_exercises', methods: ['GET'])]
+    public function show(MuscleGroupRepository $muscleGroupRepository, $id): Response
+    {
+        $muscleGroup = $muscleGroupRepository->find($id);
+
+        $exercises = $muscleGroup->getExercises();
+
+        return $this->render('muscle_group/muscleExercises.html.twig', [
+            'muscleGroup' => $muscleGroup,
+            'exercises' => $exercises,
+        ]);
+    }
+
+    #[Route('/muscle/{id}', name: 'delete_muscle', methods: ['DELETE'])]
+    public function destroy(Request $request, MuscleGroupValidation $muscleGroupValidation, $id)
+    {
+        $muscleGroupValidation->deleteMuscle($id);
+        return $this->redirectToRoute('display_muscles');
+    }
+
 
 }
