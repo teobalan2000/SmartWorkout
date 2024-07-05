@@ -72,7 +72,6 @@ class ExerciseController extends AbstractController
                 return $this->redirectToRoute('edit_exercise', ['id' => $id]);
             }
 
-//            return $this->redirectToRoute('edit_exercise', ['id' => $id]);
         }
 
         return $this->render('exercise/exercises.html.twig', [

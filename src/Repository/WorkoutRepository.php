@@ -16,6 +16,29 @@ class WorkoutRepository extends ServiceEntityRepository
         parent::__construct($registry, Workout::class);
     }
 
+    public function addWorkout(Workout $workout)
+    {
+        $this->getEntityManager()->persist($workout);
+        $this->getEntityManager()->flush();
+
+    }
+
+    public function displayWorkouts(): array
+    {
+        return $this->findAll();
+    }
+
+    public function deleteWorkout(int $id): void
+    {
+        $existingWorkout = $this->find($id);
+        if(!is_null($existingWorkout))
+        {
+            $this->getEntityManager()->remove($existingWorkout);
+            $this->getEntityManager()->flush();
+        }
+
+    }
+
     //    /**
     //     * @return Workout[] Returns an array of Workout objects
     //     */

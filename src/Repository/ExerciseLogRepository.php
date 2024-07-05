@@ -16,6 +16,12 @@ class ExerciseLogRepository extends ServiceEntityRepository
         parent::__construct($registry, ExerciseLog::class);
     }
 
+    public function addExerciseLog(ExerciseLog $exerciseLog)
+    {
+        $this->getEntityManager()->persist($exerciseLog);
+        $this->getEntityManager()->flush();
+    }
+
     //    /**
     //     * @return ExerciseLog[] Returns an array of ExerciseLog objects
     //     */
