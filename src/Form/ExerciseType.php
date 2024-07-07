@@ -23,6 +23,7 @@ class ExerciseType extends AbstractType
             ])
             ->add('muscle_group', EntityType::class, [
                 'class' => MuscleGroup::class,
+                'label' => 'Muscle group: ',
                 'choice_label' => 'name',
             ])
             ->add('button', SubmitType::class, [

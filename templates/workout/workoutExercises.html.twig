@@ -6,13 +6,15 @@
     <style>
         body {
             background-color: #F1F8E8;
+            font: 18px/1.5 Monaco;
         }
 
         .example-wrapper {
+            padding-top: 3em;
             margin: 1em auto;
             max-width: 800px;
             width: 95%;
-            font: 18px/1.5 Monaco;
+
         }
 
         .example-wrapper code {
@@ -21,7 +23,7 @@
         }
 
         table {
-            width: 100%;
+            max-width: 100vw;
             border-collapse: collapse;
             border-radius: 7px;
             overflow: hidden;
@@ -39,7 +41,7 @@
             text-align: left;
         }
 
-        tr:hover{
+        tr:hover {
             --bs-table-hover-color: #55AD9B;
         }
 
@@ -53,7 +55,130 @@
             padding: 5px 10px;
             cursor: pointer;
         }
+
+        .nav-item {
+            text-decoration: none;
+            color: #e0e0e0;
+            font-size: 20px;
+        }
+
+        button {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            vertical-align: middle;
+            text-decoration: none;
+            background: transparent;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+
+        }
+
+        button.back-button {
+            width: 12rem;
+            height: auto;
+        }
+
+        button.back-button .circle {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: relative;
+            display: block;
+            margin: 0;
+            width: 3rem;
+            height: 3rem;
+            background: #282936;
+            border-radius: 1.625rem;
+        }
+
+        button.back-button .circle .icon {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: #fff;
+        }
+
+        button.back-button .circle .icon.arrow {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            left: 1.2rem;
+            width: 1.2rem;
+            height: .125rem;
+            background: none;
+        }
+
+        button.back-button .circle .icon.arrow::before {
+            position: absolute;
+            content: "";
+            top: -0.25rem;   /* Keeps it vertically aligned with the middle */
+            left: 0rem; /* Position it from the left instead of right */
+            width: 0.625rem;
+            height: 0.625rem;
+            border-top: 0.125rem solid #fff;    /* Same size but change direction */
+            border-left: 0.125rem solid #fff;   /* Use border-left instead of border-right */
+            transform: rotate(-50deg);         /* Rotate it to point left */
+        }
+
+        button.back-button .button-text {
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.75rem 0;
+            margin: 0 0 0 1.85rem;
+            color: #282936;
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+            text-transform: uppercase;
+        }
+
+        button:hover .circle {
+            width: 100%;
+        }
+
+        button:hover .circle .icon.arrow {
+            background: #fff;
+            transform: translate(0rem, 0);
+            left: 3rem;
+        }
+
+        button:hover .button-text {
+            color: #fff;
+        }
+
     </style>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <img src="/imgs/Inverted_LogoSmartWorkout.png" alt="Logo" width="100">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item ms-3">
+                        <a class="nav-link" href="/muscleList">Exercises</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="nav-link active" aria-current="page" href="/workoutsList">Workouts Log</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="ml-auto">
+                <a href="/login" class="btn btn-outline-warning">Log In</a>
+                <a href="/user/register" class="btn btn-outline-light" >Register</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="example-wrapper">
         <h1>Exercises for {{ workout.name }}</h1>
@@ -84,5 +209,12 @@
             {% endfor %}
             </tbody>
         </table>
+
+        <button onclick="window.history.back();" class="back-button">
+            <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+            </span>
+            <span class="button-text">Back</span>
+        </button>
     </div>
 {% endblock %}

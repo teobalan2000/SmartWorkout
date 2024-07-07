@@ -47,7 +47,7 @@ class WorkoutController extends AbstractController
         ]);
     }
 
-    #[Route('/workout/{id}/exercisesList', name: 'show_exercises', methods: ['GET'])]
+    #[Route('/workout/{id}/workoutExercises', name: 'show_exercises_log', methods: ['GET'])]
     public function show(WorkoutRepository $workoutRepository, $id): Response
     {
         $workout = $workoutRepository->find($id);

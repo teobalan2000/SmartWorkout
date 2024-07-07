@@ -59,7 +59,7 @@ class MuscleGroupController extends AbstractController
         ]);
     }
 
-    #[Route('/muscle/{id}/exercisesList', name: 'show_exercises', methods: ['GET'])]
+    #[Route('/muscle/{id}/muscleExercises', name: 'show_exercises', methods: ['GET'])]
     public function show(MuscleGroupRepository $muscleGroupRepository, $id): Response
     {
         $muscleGroup = $muscleGroupRepository->find($id);

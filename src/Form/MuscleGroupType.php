@@ -16,11 +16,11 @@ class MuscleGroupType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'label' => 'Name: ',
+                'label' => 'Muscle Group Name: ',
                 'required' => true,
             ])
             ->add('button', SubmitType::class, [
-                'label' => 'Submit',
+                'label' => 'Add',
             ])
         ;
     }
