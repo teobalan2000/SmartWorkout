@@ -39,6 +39,26 @@ class MuscleGroupValidation
         }
     }
 
+    public function getMuscleById($muscleId): object
+    {
+        return $this->muscleGroupRepository->find($muscleId);
+    }
+
+    public function updateMuscleGroup(MuscleGroup $muscleGroup): array
+    {
+        $existingMuscleGroup = $this->muscleGroupRepository->checkIfMuscleExists($muscleGroup->getName(), $muscleGroup->getId());
+
+        if($existingMuscleGroup)
+        {
+            return ['error' => true, 'message' => 'A Muscle Group with this name already exists.'];
+        }
+
+
+        $this->muscleGroupRepository->addMuscleGroup($muscleGroup);
+
+        return ['success' => true, 'message' => 'Muscle Group updated successfully'];
+    }
+
     public function deleteMuscle($id): void
     {
         $this->muscleGroupRepository->deleteMuscle($id);

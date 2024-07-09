@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Exercises for {{ muscleGroup.name }}{% endblock %}
+{% block title %}Workouts!{% endblock %}
 
 {% block body %}
     <style>
@@ -60,6 +60,67 @@
             text-decoration: none;
             color: #e0e0e0;
             font-size: 20px;
+        }
+
+        .addButton {
+            position: relative;
+            width: 150px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border: 1px solid #55AD9B;
+            background-color: #95D2B3;
+            text-decoration: none;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+
+        .addButton, .button__icon, .button__text {
+            transition: all 0.3s;
+        }
+
+        .addButton .button__text {
+            transform: translateX(30px);
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .addButton .button__icon {
+            position: absolute;
+            transform: translateX(109px);
+            height: 100%;
+            width: 39px;
+            background-color: #55AD9B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .addButton .svg {
+            width: 30px;
+            stroke: #fff;
+        }
+
+        .addButton:hover {
+            background: #55AD9B;
+        }
+
+        .addButton:hover .button__text {
+            color: transparent;
+        }
+
+        .addButton:hover .button__icon {
+            width: 148px;
+            transform: translateX(0);
+        }
+
+        .addButton:active .button__icon {
+            background-color: #55AD9B;
+        }
+
+        .addButton:active {
+            border: 1px solid #55AD9B;
         }
 
         button {
@@ -152,131 +213,45 @@
             color: #fff;
         }
 
-        .addButton {
-            position: relative;
-            width: 150px;
-            height: 40px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            border: 1px solid #55AD9B;
-            background-color: #95D2B3;
-            text-decoration: none;
-            font-size: 20px;
-            border-radius: 5px;
-        }
-
-        .addButton, .button__icon, .button__text {
-            transition: all 0.3s;
-        }
-
-        .addButton .button__text {
-            transform: translateX(30px);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .addButton .button__icon {
-            position: absolute;
-            transform: translateX(109px);
-            height: 100%;
-            width: 39px;
-            background-color: #55AD9B;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .addButton .svg {
-            width: 30px;
-            stroke: #fff;
-        }
-
-        .addButton:hover {
-            background: #55AD9B;
-        }
-
-        .addButton:hover .button__text {
-            color: transparent;
-        }
-
-        .addButton:hover .button__icon {
-            width: 148px;
-            transform: translateX(0);
-        }
-
-        .addButton:active .button__icon {
-            background-color: #55AD9B;
-        }
-
-        .addButton:active {
-            border: 1px solid #55AD9B;
-        }
-
     </style>
 
 
     <div class="example-wrapper">
 
 
-        <div class="container">
-            <div class="row">
-                <div class="col-9">
-                    <h1>Exercises for {{ muscleGroup.name }}</h1>
-                </div>
-                {% if is_granted('ROLE_TRAINER') %}
-                    <div class="col-3 d-flex justify-content-end">
-                        <a href="/exercises" class="addButton">
-                            <span class="button__text">Add</span>
-                            <span class="button__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24"
-                                                            viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round"
-                                                            stroke-linecap="round" stroke="currentColor" height="24"
-                                                            fill="none" class="svg"><line y2="19" y1="5" x2="12"
-                                                                                          x1="12"></line><line y2="12"
-                                                                                                               y1="12"
-                                                                                                               x2="19"
-                                                                                                               x1="5"></line></svg></span>
-                        </a>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
+        <h1>Workouts for {{ user.name }}</h1>
+
 
         <table class="table table-hover table-striped">
             <thead>
             <tr>
-{#                <th>Index</th>#}
+                <th>Index</th>
                 <th>Name</th>
-                {% if is_granted('ROLE_TRAINER') %}
-                    <th>Actions</th>
-                {% endif %}
+                <th>User Email</th>
+                <th>Performed At</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
-            {% for exercise in exercises %}
+            {% for workout in workouts %}
                 <tr>
-{#                    <td>{{ exercise.id }}</td>#}
-                    <td>{{ exercise.name }}</td>
-                    {% if is_granted('ROLE_TRAINER') %}
-                        <td>
-                            <div class="button-group">
-                                <form action="{{ path('edit_exercise', { 'id': exercise.id }) }}">
-                                    <button class="btn btn-outline-warning">
-                                        Edit
-                                    </button>
-                                </form>
-                                <form action="{{ path('delete_exercise', { 'id': exercise.id }) }}" method="delete">
-                                    <button class="btn btn-outline-danger">
-                                        Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    {% endif %}
+                    <td>{{ workout.id }}</td>
+                    <td>{{ workout.name }}</td>
+                    <td>{{ workout.person.email }}</td>
+                    <td>{{ workout.createdAt|date("m/d/Y h:m") }}</td>
+                    <td>
+                        <div class="button-group">
+                            <form action="{{ path('show_exercises_log', { 'id': workout.id }) }}">
+                                <button class="btn btn-outline-info">
+                                    Exercises
+                                </button>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
             {% else %}
                 <tr>
-                    <td colspan="3">No exercises found</td>
+                    <td colspan="3">No records found</td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -289,4 +264,14 @@
             <span class="button-text">Back</span>
         </button>
     </div>
+
+    <script>
+        function ShowExercises(id) {
+            console.log('show', id);
+        }
+
+        function deleteWorkout(id) {
+            console.log('delete', id);
+        }
+    </script>
 {% endblock %}

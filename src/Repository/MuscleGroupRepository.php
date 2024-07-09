@@ -27,7 +27,7 @@ class MuscleGroupRepository extends ServiceEntityRepository
         return $this->findAll();
     }
 
-    public function deleteMuscle(int $id): void
+    public function deleteMuscle(int $id)
     {
         $existingMuscle = $this->find($id);
         if(!is_null($existingMuscle))
@@ -36,6 +36,21 @@ class MuscleGroupRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
 
+    }
+
+    /**
+     * @return MuscleGroup|null Returns an Exercise object or null
+     */
+    public function checkIfMuscleExists($name, $id): ?MuscleGroup
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.name = :name')
+            ->andWhere('e.id != :id')
+            ->setParameter('name', $name)
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
     }
 
 }

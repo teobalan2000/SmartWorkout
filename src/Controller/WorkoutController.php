@@ -60,7 +60,7 @@ class WorkoutController extends AbstractController
         ]);
     }
 
-    #[Route('/muscle/{id}', name: 'delete_muscle', methods: ['DELETE'])]
+    #[Route('/workoutsList/{id}', name: 'delete_workout', methods: ['DELETE'])]
     public function destroy(Request $request, WorkoutService $workoutService, $id)
     {
         $workoutService->deleteWorkout($id);

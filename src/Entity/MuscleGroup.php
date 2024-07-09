@@ -24,6 +24,9 @@ class MuscleGroup
     #[ORM\OneToMany(targetEntity: Exercise::class, mappedBy: 'muscleGroup', orphanRemoval: true)]
     private Collection $exercises;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $muscleImage;
+
     public function __construct()
     {
         $this->exercises = new ArrayCollection();
@@ -73,6 +76,17 @@ class MuscleGroup
             }
         }
 
+        return $this;
+    }
+
+    public function getMuscleImage(): ?string
+    {
+        return $this->muscleImage;
+    }
+
+    public function setMuscleImage(?string $muscleImage): self
+    {
+        $this->muscleImage = $muscleImage;
         return $this;
     }
 }

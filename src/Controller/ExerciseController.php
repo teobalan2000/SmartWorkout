@@ -81,7 +81,7 @@ class ExerciseController extends AbstractController
     }
 
     #[Route('/exercises/{id}', name: 'delete_exercise', methods: ['DELETE'])]
-    public function destroy(Request $request, ExerciseService $exerciseService, $id)
+    public function destroy(ExerciseService $exerciseService, $id)
     {
         $exerciseService->deleteExercise($id);
         return $this->redirectToRoute('display_exercises');

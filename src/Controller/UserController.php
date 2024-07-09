@@ -59,4 +59,21 @@ class UserController extends AbstractController
             'users' => $users,
         ]);
     }
+
+    #[Route('/users/{id}', name: 'show_user_details', methods: ['GET'])]
+    public function show(UserRepository $userRepository, $id): Response
+    {
+        $user = $userRepository->find($id);
+
+        $name = $user->getName();
+
+        $workouts = $user->getWorkouts();
+
+
+        return $this->render('user/userWorkouts.html.twig', [
+            'user' => $user,
+            'name' => $name,
+            'workouts' => $workouts,
+        ]);
+    }
 }
