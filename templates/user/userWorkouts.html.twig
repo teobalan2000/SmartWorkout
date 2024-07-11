@@ -225,20 +225,22 @@
         <table class="table table-hover table-striped">
             <thead>
             <tr>
-                <th>Index</th>
+{#                <th>Index</th>#}
                 <th>Name</th>
-                <th>User Email</th>
+{#                <th>User Email</th>#}
                 <th>Performed At</th>
+                <th>Duration</th>
                 <th>Actions</th>
             </tr>
             </thead>
             <tbody>
             {% for workout in workouts %}
                 <tr>
-                    <td>{{ workout.id }}</td>
+{#                    <td>{{ workout.id }}</td>#}
                     <td>{{ workout.name }}</td>
-                    <td>{{ workout.person.email }}</td>
+{#                    <td>{{ workout.person.email }}</td>#}
                     <td>{{ workout.createdAt|date("m/d/Y h:m") }}</td>
+                    <td>{{ workout.getTotalDuration() }} min</td>
                     <td>
                         <div class="button-group">
                             <form action="{{ path('show_exercises_log', { 'id': workout.id }) }}">

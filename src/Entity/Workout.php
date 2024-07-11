@@ -107,4 +107,13 @@ class Workout
 
         return $this;
     }
+
+    public function getTotalDuration(): int
+    {
+        $totalDuration = 0;
+        foreach ($this->exerciseLogs as $exerciseLog) {
+            $totalDuration += $exerciseLog->getDuration(); // Assuming `getDuration()` returns duration in seconds or minutes
+        }
+        return $totalDuration;
+    }
 }
