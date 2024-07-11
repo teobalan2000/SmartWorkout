@@ -25,6 +25,21 @@
             font-size: 20px;
             color: #F5F5F5;
         }
+
+        .fixed-button {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            z-index: 1000;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 30px;
+        }
     </style>
 
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
@@ -64,6 +79,11 @@
             {% endif %}
         </div>
     </nav>
+
+    <a href="/workout"  class="btn btn-warning fixed-button">
+        +
+    </a>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         {% block body %}{% endblock %}
     </body>

@@ -22,6 +22,9 @@ class ExerciseLog
     #[ORM\Column]
     private ?int $sets = null;
 
+    #[ORM\Column]
+    private ?int $weight = null;
+
     #[ORM\ManyToOne(inversedBy: 'exerciseLogs')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Workout $workout = null;
@@ -67,6 +70,18 @@ class ExerciseLog
     public function setSets(int $sets): static
     {
         $this->sets = $sets;
+
+        return $this;
+    }
+
+    public function getWeight(): ?int
+    {
+        return $this->weight;
+    }
+
+    public function setWeight(int $weight): static
+    {
+        $this->weight = $weight;
 
         return $this;
     }

@@ -135,7 +135,7 @@ class MuscleGroupController extends AbstractController
         ]);
     }
 
-    #[Route('/muscle/{id}', name: 'delete_muscle', methods: ['DELETE'])]
+    #[Route('/muscle/{id}/delete', name: 'delete_muscle', methods: ['DELETE'])]
     public function destroy(MuscleGroupValidation $muscleGroupValidation, $id)
     {
         $muscleGroupValidation->deleteMuscle($id);

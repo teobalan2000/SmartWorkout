@@ -123,6 +123,8 @@
             border: 1px solid #55AD9B;
         }
 
+
+
     </style>
 
 
@@ -163,7 +165,7 @@
             {% for muscle in muscles %}
                 <tr>
 {#                    <td>{{ muscle.id }}</td>#}
-                    <td>
+                    <td class="text-center">
                         {% if muscle.muscleImage %}
                             <img src="{{ asset('/uploads/images/' ~ muscle.muscleImage) }}" alt="{{ muscle.name }}"
                                  style="max-width: 50px; max-height: 100px;">

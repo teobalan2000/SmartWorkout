@@ -17,6 +17,7 @@ class WorkoutController extends AbstractController
     #[Route('/workout', name: 'app_workout')]
     public function store(Request $request, WorkoutService $workoutService, UserInterface $user): Response
     {
+
         $workout = new Workout();
 
         $form = $this->createForm(WorkoutType::class, $workout);
